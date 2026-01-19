@@ -1,6 +1,5 @@
 
 mod backend;
-use crate::backend::save_dog;
 
 mod components;
 use crate::components::label::Label;
