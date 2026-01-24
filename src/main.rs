@@ -1,10 +1,10 @@
 
 mod backend;
-use crate::backend::save_dog;
 
 mod components;
 use crate::components::label::Label;
 use crate::components::input::Input;
+// use crate::components::menubar::*;
 
 use dioxus::prelude::*;
 
@@ -78,6 +78,45 @@ pub fn Languages() -> Element {
         }
     }
 }
+
+// #[component]
+// pub fn Menu() -> Element {
+//     rsx! {
+//         div { class: "menubar",
+//             Menubar {
+//                 MenubarMenu { index: 0usize,
+//                     MenubarTrigger { "Options" }
+//                     MenubarContent {
+//                         MenubarItem {
+//                             index: 0usize,
+//                             value: "review".to_string(),
+//                             on_select: move |value| {
+//                                 tracing::info!("Selected value: {}", value);
+//                             },
+//                             "Review Mode"
+//                         }
+//                         MenubarItem {
+//                             index: 1usize,
+//                             value: "dictionary".to_string(),
+//                             on_select: move |value| {
+//                                 tracing::info!("Selected value: {}", value);
+//                             },
+//                             "Dictionary"
+//                         }
+//                         MenubarItem {
+//                             index: 2usize,
+//                             value: "predict".to_string(),
+//                             on_select: move |value| {
+//                                 tracing::info!("Selected value: {}", value);
+//                             },
+//                             "Predict"
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
 
 #[component]
 pub fn Bolinao() -> Element {
