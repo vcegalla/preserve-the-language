@@ -25,19 +25,64 @@ fn main() {
 #[component]
 fn App() -> Element {
     rsx! {
-        document::Stylesheet { href: CSS }
-        Title {}
-        Bolinao {}
-        Zambal {}
-        Bisaya {}
-        English {}
+        document::Stylesheet { href: asset!("/assets/tailwind.css") }
+        meta {
+            name: "viewport",
+            content: "width=device-width, initial-scale=1.0",
+        }
+        Content {}
+
+    }
+}
+
+#[component]
+pub fn TempNavigation() -> Element {
+    rsx! {
+        div { id: "navigation", class: "grow-1 bg-green-500" }
+    }
+}
+
+#[component]
+pub fn Content() -> Element {
+    rsx! {
+        div { id: "content", class: "flex flex-col min-h-screen bg-blue-500",
+            Title {}
+            Languages {}
+            TempNavigation {}
+        }
+    }
+}
+
+#[component]
+fn Title() -> Element {
+    rsx! {
+        div { id: "title", class: "grow-3 bg-red-500",
+            h1 { "for the culture" }
+        }
+    }
+}
+
+#[component]
+pub fn Languages() -> Element {
+    rsx! {
+        div {
+            id: "languages",
+            class: "flex flex-col grow-6 justify-end mt-2 ml-6 mr-6 mb-2 bg-red-500 space-y-13",
+            Bolinao {}
+
+            Zambal {}
+
+            Bisaya {}
+
+            English {}
+        }
     }
 }
 
 #[component]
 pub fn Bolinao() -> Element {
     rsx! {
-        div { display: "flex", flex_direction: "column", gap: ".5rem",
+        div { class: "bg-white m-3",
             Label { html_for: "bolinao", "Bolinao" }
 
             Input { id: "bolinao", placeholder: "Bolinao translation" }
@@ -48,7 +93,7 @@ pub fn Bolinao() -> Element {
 #[component]
 pub fn Zambal() -> Element {
     rsx! {
-        div { display: "flex", flex_direction: "column", gap: ".5rem",
+        div { class: "bg-white m-3",
             Label { html_for: "zambal", "Zambal" }
 
             Input { id: "zambal", placeholder: "Zambal translation" }
@@ -59,7 +104,7 @@ pub fn Zambal() -> Element {
 #[component]
 pub fn Bisaya() -> Element {
     rsx! {
-        div { display: "flex", flex_direction: "column", gap: ".5rem",
+        div { class: "bg-white m-3",
             Label { html_for: "bisaya", "Bisaya" }
 
             Input { id: "bisaya", placeholder: "Bisaya translation" }
@@ -70,19 +115,10 @@ pub fn Bisaya() -> Element {
 #[component]
 pub fn English() -> Element {
     rsx! {
-        div { display: "flex", flex_direction: "column", gap: ".5rem",
+        div { class: "bg-white m-3",
             Label { html_for: "english", "English" }
 
             Input { id: "english", placeholder: "Enter English word/phrase" }
-        }
-    }
-}
-
-#[component]
-fn Title() -> Element {
-    rsx! {
-        div { id: "title",
-            h1 { "Cultural Preservation! 🌭" }
         }
     }
 }
