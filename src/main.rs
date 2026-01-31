@@ -4,12 +4,8 @@ mod backend;
 mod components;
 use crate::components::label::Label;
 use crate::components::input::Input;
-use crate::components::dropdown_menu::*;
 
 use dioxus::prelude::*;
-use strum::*;
-
-static CSS: Asset = asset!("/assets/main.css");
 
 fn main() {
     #[cfg(not(feature = "server"))]
@@ -42,44 +38,7 @@ pub fn Navigation() -> Element {
         div {
             id: "navigation",
             class: "fixed bottom-0 left-0 w-full h-16 z-50 bg-green-500",
-            AppMenu {}
         }
-    }
-}
-
-#[derive(Clone, Copy, strum::Display, strum::EnumIter, PartialEq)]
-enum Operation {
-    Main,
-    Review,
-    Dictionary,
-}
-
-#[component]
-pub fn AppMenu() -> Element {
-    let mut selected_operation = use_signal(|| None);
-
-    let operations = Operation::iter().enumerate().map(|(i, o)| {
-        rsx! {
-            DropdownMenuItem::<Operation> {
-                class: "dropdown-menu-item",
-                value: o,
-                index: i,
-                on_select: move |value| {
-                    selected_operation.set(Some(value));
-                },
-                {o.to_string()}
-            }
-        }
-    });
-
-    rsx! {
-        DropdownMenu { class: "dropdown-menu", default_open: false,
-            DropdownMenuTrigger { class: "dropdown-menu-trigger", "Options" }
-            DropdownMenuContent { class: "dropdown-menu-content", {operations} }
-        }
-        // if let Some(op) = selected_operation() {
-        //     "Selected: {op}"
-        // }
     }
 }
 
