@@ -4,9 +4,10 @@ mod backend;
 mod components;
 use crate::components::label::Label;
 use crate::components::input::Input;
-// use crate::components::menubar::*;
+use crate::components::dropdown_menu::*;
 
 use dioxus::prelude::*;
+use strum::*;
 
 static CSS: Asset = asset!("/assets/main.css");
 
@@ -36,19 +37,61 @@ fn App() -> Element {
 }
 
 #[component]
-pub fn TempNavigation() -> Element {
+pub fn Navigation() -> Element {
     rsx! {
-        div { id: "navigation", class: "grow-1 bg-green-500" }
+        div {
+            id: "navigation",
+            class: "fixed bottom-0 left-0 w-full h-16 z-50 bg-green-500",
+            AppMenu {}
+        }
+    }
+}
+
+#[derive(Clone, Copy, strum::Display, strum::EnumIter, PartialEq)]
+enum Operation {
+    Main,
+    Review,
+    Dictionary,
+}
+
+#[component]
+pub fn AppMenu() -> Element {
+    let mut selected_operation = use_signal(|| None);
+
+    let operations = Operation::iter().enumerate().map(|(i, o)| {
+        rsx! {
+            DropdownMenuItem::<Operation> {
+                class: "dropdown-menu-item",
+                value: o,
+                index: i,
+                on_select: move |value| {
+                    selected_operation.set(Some(value));
+                },
+                {o.to_string()}
+            }
+        }
+    });
+
+    rsx! {
+        DropdownMenu { class: "dropdown-menu", default_open: false,
+            DropdownMenuTrigger { class: "dropdown-menu-trigger", "Options" }
+            DropdownMenuContent { class: "dropdown-menu-content", {operations} }
+        }
+        // if let Some(op) = selected_operation() {
+        //     "Selected: {op}"
+        // }
     }
 }
 
 #[component]
 pub fn Content() -> Element {
     rsx! {
-        div { id: "content", class: "flex flex-col min-h-screen bg-blue-500",
+        div {
+            id: "content",
+            class: "flex flex-col h-[calc(100vh-4rem)] bg-blue-500",
             Title {}
             Languages {}
-            TempNavigation {}
+            Navigation {}
         }
     }
 }
@@ -78,45 +121,6 @@ pub fn Languages() -> Element {
         }
     }
 }
-
-// #[component]
-// pub fn Menu() -> Element {
-//     rsx! {
-//         div { class: "menubar",
-//             Menubar {
-//                 MenubarMenu { index: 0usize,
-//                     MenubarTrigger { "Options" }
-//                     MenubarContent {
-//                         MenubarItem {
-//                             index: 0usize,
-//                             value: "review".to_string(),
-//                             on_select: move |value| {
-//                                 tracing::info!("Selected value: {}", value);
-//                             },
-//                             "Review Mode"
-//                         }
-//                         MenubarItem {
-//                             index: 1usize,
-//                             value: "dictionary".to_string(),
-//                             on_select: move |value| {
-//                                 tracing::info!("Selected value: {}", value);
-//                             },
-//                             "Dictionary"
-//                         }
-//                         MenubarItem {
-//                             index: 2usize,
-//                             value: "predict".to_string(),
-//                             on_select: move |value| {
-//                                 tracing::info!("Selected value: {}", value);
-//                             },
-//                             "Predict"
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
 
 #[component]
 pub fn Bolinao() -> Element {
