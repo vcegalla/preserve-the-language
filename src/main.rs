@@ -4,6 +4,7 @@ mod backend;
 mod components;
 use crate::components::label::Label;
 use crate::components::input::Input;
+use crate::components::button::Button;
 
 use dioxus::prelude::*;
 
@@ -50,6 +51,7 @@ pub fn Content() -> Element {
             class: "flex flex-col h-[calc(100vh-4rem)] bg-blue-500",
             Title {}
             Languages {}
+            SubmitButton {}
             Navigation {}
         }
     }
@@ -58,7 +60,9 @@ pub fn Content() -> Element {
 #[component]
 fn Title() -> Element {
     rsx! {
-        div { id: "title", class: "grow-3 bg-red-500",
+        div {
+            id: "title",
+            class: "flex flex-col justify-center items-center grow-3 bg-red-500",
             h1 { "for the culture" }
         }
     }
@@ -121,6 +125,16 @@ pub fn English() -> Element {
             Label { html_for: "english", "English" }
 
             Input { id: "english", placeholder: "Enter English word/phrase" }
+        }
+    }
+}
+
+#[component]
+
+pub fn SubmitButton() -> Element {
+    rsx! {
+        div { class: "flex justify-center m-3",
+            Button { "Submit" }
         }
     }
 }
