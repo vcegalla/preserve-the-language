@@ -27,7 +27,7 @@ pub fn Input(
 ) -> Element {
     rsx! {
         input {
-            class: "input",
+            class: "relative flex box-border flex-row align-center justify-between w-full p-2 rounded-lg disabled:cursor-not-allowed focus:outline-none focus:ring-0",
             oninput: move |e| _ = oninput.map(|callback| callback(e)),
             onchange: move |e| _ = onchange.map(|callback| callback(e)),
             oninvalid: move |e| _ = oninvalid.map(|callback| callback(e)),
